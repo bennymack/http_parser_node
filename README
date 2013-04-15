@@ -1,0 +1,4 @@
+Perl bindings to the C http-parser from Joyent.
+
+https://github.com/joyent/http-parser.git
+
