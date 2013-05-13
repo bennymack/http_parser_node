@@ -101,58 +101,20 @@ HTTP::Parser::Joyent::Reference - an HTTP request parser
 =head1 SYNOPSIS
 
   use HTTP::Parser::Joyent;
-
-  my $parser = HTTP::Parser::Joyent->new;
-
-  my $ret = $parser->parse( "GET / HTTP/1.0\r\nHost: ...\r\n\r\n", );
-  if( $ret == -2 ) {
-      # request is incomplete
-      ...
-  } elsif ( $ret == -1 ) {
+  my $parser = HTTP::Parser::Joyent::Reference->new;
+  my $request = "GET / HTTP/1.0\r\nHost: ...\r\n\r\n";
+  my $nparsed = $parser->parse( $request, );
+  if( $nparsed != length $request ) {
       # request is broken
       ...
-  } else {
-    # body in $env->{'psgi.input'}
+  }
+  elsif( $parser->message_complete ) {
     my $env = $parser->get_env;
   }
 
 =head1 DESCRIPTION
 
-HTTP::Parser::Joyent is a HTTP parser based on ry's http-parser that can be used either for writing a synchronous HTTP server or a event-driven server.
-
-=head1 METHODS
-
-=head2 new( [ $href ] )
-
-See also: C<http_parser_type> in L<http-parser/http_parser.h>
-
-=head3 type => 0
-
-HTTP_REQUEST
-
-=head3 type => 1
-
-HTTP_RESPONSE
-
-=head3 type => 2
-
-HTTP_BOTH
-
-=head1 parse
-
-Tries to parse given request string. The return values are:
-
-=head3 -1
-
-given request is corrupt
-
-=head3 -2
-
-given request is incomplete
-
-=head1 get_env
-
-For the name of the variables inserted, please refer to the PSGI specification.
+Reference implementation of the abstrace HTTP::Parser::Joyent class.
 
 =head1 AUTHOR
 
@@ -160,14 +122,11 @@ Ben B.
 
 =head1 SEE ALSO
 
-L<HTTP::Parser>
-L<HTTP::Parser::XS>
-L<HTTP::HeaderParser::XS>
+L<HTTP::Parser::Joyent>
 
 =head1 LICENSE
 
 This library is free software; you can redistribute it and/or modify it under the same terms as Perl itself.
 
 =cut
-
 
