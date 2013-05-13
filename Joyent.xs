@@ -165,11 +165,6 @@ CODE:
 OUTPUT:
 	RETVAL
 
-#void print_addr( foo )
-#	SV *foo;
-#CODE:
-#	printf( "print_addr = %x\n", foo );
-
 ###void print_parser_data( self )
 ###	SV *self;
 ###PREINIT:
@@ -199,8 +194,6 @@ OUTPUT:
 ## 	RETVAL = (SV *)parser->data;
 ## OUTPUT:
 ## 	RETVAL
-
-## PTR2IV
 
 SV *http_method( self )
 	SV *self

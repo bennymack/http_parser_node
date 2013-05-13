@@ -2,3 +2,7 @@ Perl bindings to the C http-parser from Joyent.
 
 https://github.com/joyent/http-parser.git
 
+perl Makefile.PL
+make httpparser
+make
+
