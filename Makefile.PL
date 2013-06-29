@@ -7,6 +7,7 @@ WriteMakefile(
     VERSION_FROM  => 'lib/HTTP/Parser/Joyent.pm',
     PREREQ_PM     => {
 #		'IO::Epoll'      => 0,
+		'Sub::Exporter',
 	},
 	BUILD_REQUIRES => {
 		'Test::Class'     => 0,

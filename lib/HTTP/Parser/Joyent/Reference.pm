@@ -32,12 +32,12 @@ sub on_header_field {
 sub on_header_value {
 	my( $self, $buffer, $length ) = @ARG;
 	if( $self->{temp_header_field} ) {
-		$self->{currenct_header_field} = delete $self->{temp_header_field};
-		if( exists $self->{headers} ) {
-			$self->{headers}{ uc $self->{currenct_header_field} } .= q(,);
+		$self->{currenct_header_field} = uc delete $self->{temp_header_field};
+		if( exists $self->{headers}{ $self->{currenct_header_field} } ) {
+			$self->{headers}{ $self->{currenct_header_field} } .= q(,);
 		}
 	}
-	$self->{headers}{ uc $self->{currenct_header_field} } .= $buffer;
+	$self->{headers}{ $self->{currenct_header_field} } .= $buffer;
 	return 0;
 }
 
@@ -68,13 +68,14 @@ sub get_env {
 		warn 'not message_complete ?';
 		return;
 	}
-	my $url = $self->{url};
+	# What about for HTTP_RESPONSE?
+	my $url = $self->{url} // q();
 	my( $script_name, $query_string ) = split /\?/, $url, 2;
 	my %env = ( 
 		REQUEST_METHOD    => $self->http_method,
-		SCRIPT_NAME       => $script_name,
+		SCRIPT_NAME       => $script_name // q(),
 		REQUEST_URI       => $url,
-		QUERY_STRING      => $query_string,
+		QUERY_STRING      => $query_string // q(),
 		SERVER_PROTOCOL   => $self->http_version,
 		CONTENT_LENGTH    => delete $self->{headers}{ 'CONTENT-LENGTH' } // 0,
 		CONTENT_TYPE      => delete $self->{headers}{ 'CONTENT-TYPE' } // '',
