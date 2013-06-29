@@ -3,18 +3,18 @@ use ExtUtils::MakeMaker;
 my $HTTP_PARSER_OBJECT = $ENV{DEBUG} ? 'libhttp_parser_g.o' : 'libhttp_parser.o';
 
 WriteMakefile(
-    NAME          => 'HTTP::Parser::Joyent',
-    VERSION_FROM  => 'lib/HTTP/Parser/Joyent.pm',
+    NAME          => 'HTTP::Parser::Node',
+    VERSION_FROM  => 'lib/HTTP/Parser/Node.pm',
     PREREQ_PM     => {
-#		'IO::Epoll'      => 0,
-		'Sub::Exporter',
+#		'IO::Epoll'      => '0',
+		'Sub::Exporter'  => '0',
 	},
 	BUILD_REQUIRES => {
-		'Test::Class'     => 0,
-		'Test::Exception' => 0,
-		'Test::More'      => 0,
+		'Test::Class'     => '0',
+		'Test::Exception' => '0',
+		'Test::More'      => '0',
 	},
-    ABSTRACT_FROM => 'lib/HTTP/Parser/Joyent.pm',
+    ABSTRACT_FROM => 'lib/HTTP/Parser/Node.pm',
     AUTHOR        => 'Ben B.',
     ( $ENV{DEBUG} ? ( CCFLAGS       => '-ggdb -Wall' ) : () ),
     ( $ENV{DEBUG} ? ( OPTIMIZE      => '-g' ) : () ),
@@ -25,7 +25,7 @@ WriteMakefile(
     INC           => '-Ihttp-parser',
     MYEXTLIB      => "http-parser/$HTTP_PARSER_OBJECT ",
     clean         => { FILES => 'http-parser/*.o http-parser/test http-parser/test_fast http-parser/test_g http-parser/http_parser.tar http-parser/tags' },
-	test          => { TESTS => 't/HTTP/Parser/*Test.pm t/HTTP/Parser/Joyent/*Test.pm' },
+	test          => { TESTS => 't/HTTP/Parser/*Test.pm t/HTTP/Parser/Node/*Test.pm' },
 );
 
 sub MY::postamble {
